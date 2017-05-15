@@ -27,7 +27,7 @@ void main() {
 
     float difference = max(dot(normal, lightDir), 0.0f);
     vec3 diffuseValue = difference * lightColor;
-    
+     
     // Specular light
     vec3 viewDir = normalize(viewPosition - OutFragPosition);
     vec3 reflectionDir = reflect(-lightDir, normal);
