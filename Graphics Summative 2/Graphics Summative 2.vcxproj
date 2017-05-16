@@ -153,15 +153,15 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\geometry.fs" />
+    <None Include="assets\shaders\geometry.gs" />
+    <None Include="assets\shaders\geometry.vs" />
     <None Include="assets\shaders\model.fs" />
     <None Include="assets\shaders\model.vs" />
     <None Include="assets\shaders\skybox.fs" />
     <None Include="assets\shaders\skybox.vs" />
     <None Include="assets\shaders\specular.fs" />
     <None Include="assets\shaders\specular.vs" />
-    <None Include="geometry.fs" />
-    <None Include="geometry.gs" />
-    <None Include="geometry.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

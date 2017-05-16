@@ -20,6 +20,7 @@
 #include "Cubemap.h"
 #include "model.h"
 #include "terrain.h"
+#include "GeometryModel.h"
 #include <string>
 
 #define DOWN 1
@@ -44,6 +45,7 @@ GameModel* Mirror;
 GameModel* ReflectedCube;
 GameModel* LightSphere;
 Terrain* terrain;
+GeometryModel* geomModel;
 
 // Mouse
 unsigned char mouseState[3];
@@ -161,7 +163,6 @@ int main(int argc, char **argv) {
 	Castle->SetScale(vec3(0.1f));
 
 	// Terrain
-
 	GLuint terrainProgram = shaderLoader.CreateProgram("assets/shaders/heightmap.vs", "assets/shaders/heightmap.fs");
 	terrain = new Terrain(L"assets/heightmap/terrain.raw",
 						   "assets/heightmap/sand.jpg",
@@ -170,6 +171,13 @@ int main(int argc, char **argv) {
 						   terrainProgram,
 						   camera,
 						   light);
+
+	// Geometry Model
+	GLuint geomProgram = shaderLoader.CreateProgram("assets/shaders/geometry.vs", "assets/shaders/geometry.fs",
+													"assets/shaders/geometry.gs");
+	geomModel = new GeometryModel(geomProgram, camera);
+	geomModel->SetPosition(glm::vec3(5.0f, 3.0f, 0.0f));
+
 
 	// -- Object creation
 	glutDisplayFunc(Render);
@@ -209,6 +217,8 @@ void Render() {
 	LightSphere->Render();
 
 	terrain->draw();
+
+	geomModel->Render();
 
 	glutSwapBuffers();
 
@@ -288,8 +298,8 @@ void Update() {
 
 	// Reset
 	if ((KeyCode[(unsigned char)'r'] == KeyState::Pressed) || (KeyCode[(unsigned char)'R'] == KeyState::Pressed)) {
-		camera->SetPosition(vec3(0, 0, 8));
-		light->SetPosition(vec3(0, 0, 0));
+		camera->SetPosition(vec3(0, 4, 8));
+		light->SetPosition(vec3(0, 4, 0));
 	}
 }
 

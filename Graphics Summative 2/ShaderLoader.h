@@ -21,4 +21,7 @@ public:
 	GLuint CreateProgram(char* VertexShaderFilename,
 						 char* FragmentShaderFilename);
 
+	GLuint CreateProgram(char* VertexShaderFilename,
+						 char* FragmentShaderFilename,
+						 char* GeometryShaderFilename);
 };

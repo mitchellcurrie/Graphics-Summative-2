@@ -6,7 +6,7 @@ GeometryModel::GeometryModel(GLuint program, Camera* camera)
 	this->m_camera = camera;
 
 	GLfloat points[] = {
-		0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,  // passing in one point
+		0.0f, 0.0f, 0.0f, 0.2f, 0.4f, 0.8f,  // passing in one point
 	};
 
 	glBindVertexArray(vao);
