@@ -99,7 +99,7 @@ void main(){
 		///////
 
 		float d = distance(worldPos, cameraPos);
-		float lerp = (d - 50.0f) / 10.0f;
+		float lerp = (d - 100.0f) / 10.0f;
 		lerp = clamp(lerp, 0.0f, 1.0f);
 
 		vec4 vFogColor = vec4(0.5f, 0.5f, 0.5f, 1.0f);

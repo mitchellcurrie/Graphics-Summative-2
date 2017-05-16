@@ -156,6 +156,8 @@
     <None Include="assets\shaders\geometry.fs" />
     <None Include="assets\shaders\geometry.gs" />
     <None Include="assets\shaders\geometry.vs" />
+    <None Include="assets\shaders\heightmap.fs" />
+    <None Include="assets\shaders\heightmap.vs" />
     <None Include="assets\shaders\model.fs" />
     <None Include="assets\shaders\model.vs" />
     <None Include="assets\shaders\skybox.fs" />

@@ -56,6 +56,13 @@ GLfloat lastX = Utils::WIDTH / 2.0;
 GLfloat lastY = Utils::HEIGHT / 2.0;
 bool firstMouse = true;
 
+// Move everything
+float fMoveY = 42.9f;
+float iMoveY = static_cast<float>(fMoveY);
+
+float fMoveX = 13.0f;
+float iMoveX = static_cast<float>(fMoveX);
+
 // Custom models
 Model *Castle, *Nanosuit;
 
@@ -103,16 +110,16 @@ int main(int argc, char **argv) {
 	glewInit();
 
 	// -- Object creation
-	camera = new Camera(vec3(0, 4, 8), ut->WIDTH, ut->HEIGHT);
+	camera = new Camera(vec3(0 + iMoveX, 4 + iMoveY, 8), ut->WIDTH, ut->HEIGHT);
 	camera->SetSpeed(0.03f);
-	light = new Light(vec3(0, 4, 0), vec3(0.5f, 0.5f, 0.5f));
+	light = new Light(vec3(0 + iMoveX, 4 + iMoveY, 0), vec3(0.5f, 0.5f, 0.5f));
 	light->SetSpeed(0.04f);
 
 	// Sphere
 	GLuint triangleProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
 	Sphere = new GameModel(ModelType::kSphere, camera, "assets/textures/books.jpg", light, 0.65f, 4.3f);
 	Sphere->SetProgram(triangleProgram);
-	Sphere->SetPosition(vec3(-6, 4.5f, 0));
+	Sphere->SetPosition(vec3(-6.0f + fMoveX, 4.5f + fMoveY, 0));
 	Sphere->SetSpeed(0.005f);
 
 	// Skybox
@@ -155,16 +162,16 @@ int main(int argc, char **argv) {
 	// Model
 	GLuint modelProgram = shaderLoader.CreateProgram("assets/shaders/model.vs", "assets/shaders/model.fs");
 	Nanosuit = new Model("assets/models/Nanosuit/nanosuit.obj", camera, modelProgram);
-	Nanosuit->SetPosition(vec3(-0.05, 1.6f, 2.75));
+	Nanosuit->SetPosition(vec3(-0.05f + fMoveX, 1.6f + fMoveY, 2.75));
 	Nanosuit->SetScale(vec3(0.04f));
 
 	Castle = new Model("assets/models/Castle/Castle OBJ.obj", camera, modelProgram);
-	Castle->SetPosition(vec3(0, 1.6f, 0));
+	Castle->SetPosition(vec3(0 + fMoveX, 1.6f + fMoveY, 0));
 	Castle->SetScale(vec3(0.1f));
 
 	// Terrain
 	GLuint terrainProgram = shaderLoader.CreateProgram("assets/shaders/heightmap.vs", "assets/shaders/heightmap.fs");
-	terrain = new Terrain(L"assets/heightmap/terrain.raw",
+	terrain = new Terrain(L"assets/heightmap/terrain_1.raw",
 						   "assets/heightmap/sand.jpg",
 						   "assets/heightmap/grass.jpg",
 						   "assets/heightmap/rock.jpg",
@@ -176,7 +183,7 @@ int main(int argc, char **argv) {
 	GLuint geomProgram = shaderLoader.CreateProgram("assets/shaders/geometry.vs", "assets/shaders/geometry.fs",
 													"assets/shaders/geometry.gs");
 	geomModel = new GeometryModel(geomProgram, camera);
-	geomModel->SetPosition(glm::vec3(5.0f, 3.0f, 0.0f));
+	geomModel->SetPosition(glm::vec3(5.0f + fMoveX, 19.0f + fMoveY, -20.0f));
 
 
 	// -- Object creation
@@ -298,8 +305,8 @@ void Update() {
 
 	// Reset
 	if ((KeyCode[(unsigned char)'r'] == KeyState::Pressed) || (KeyCode[(unsigned char)'R'] == KeyState::Pressed)) {
-		camera->SetPosition(vec3(0, 4, 8));
-		light->SetPosition(vec3(0, 4, 0));
+		camera->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 8));
+		light->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 0));
 	}
 }
 
