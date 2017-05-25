@@ -39,6 +39,8 @@ ShaderLoader shaderLoader;
 Camera* camera;
 Light* light;
 GameModel* Sphere;
+GameModel* Sphere2;
+GameModel* Sphere3;
 Cubemap* skybox;
 GameModel* Cube;
 GameModel* Mirror;
@@ -116,11 +118,25 @@ int main(int argc, char **argv) {
 	light->SetSpeed(0.04f);
 
 	// Sphere
-	GLuint triangleProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	GLuint sphereProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
 	Sphere = new GameModel(ModelType::kSphere, camera, "assets/textures/books.jpg", light, 0.65f, 4.3f);
-	Sphere->SetProgram(triangleProgram);
+	Sphere->SetProgram(sphereProgram);
 	Sphere->SetPosition(vec3(-6.0f + fMoveX, 4.5f + fMoveY, 0));
 	Sphere->SetSpeed(0.005f);
+
+	// Sphere 2
+	GLuint sphere2Program = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	Sphere2 = new GameModel(ModelType::kSphere, camera, "assets/textures/books.jpg", light, 0.65f, 4.3f);
+	Sphere2->SetProgram(sphere2Program);
+	Sphere2->SetPosition(vec3(-6.0f + fMoveX, 4.5f + fMoveY, -3.0f));
+	Sphere2->SetSpeed(0.005f);
+
+	// Sphere 3
+	GLuint sphere3Program = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	Sphere3 = new GameModel(ModelType::kSphere, camera, "assets/textures/books.jpg", light, 0.65f, 4.3f);
+	Sphere3->SetProgram(sphere3Program);
+	Sphere3->SetPosition(vec3(-6.0f + fMoveX, 4.5f + fMoveY, -6.0f));
+	Sphere3->SetSpeed(0.005f);
 
 	// Skybox
 	GLuint cubemapProgram = shaderLoader.CreateProgram("assets/shaders/skybox.vs", "assets/shaders/skybox.fs");
@@ -222,6 +238,9 @@ void Render() {
 //	Cube->RenderStencil(Cube, Mirror, ReflectedCube);
 
 	LightSphere->Render();
+
+	Sphere2->Render();
+	Sphere3->Render();
 
 	terrain->draw();
 
