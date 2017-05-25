@@ -146,8 +146,10 @@ void Utils::setSphereData(std::vector<VertexFormat>& vertices, std::vector<GLuin
 
 			VertexFormat vs;
 
-			vs.texCoord.u = 1 - (longNumber / longitudeBands); // u
-			vs.texCoord.v = 1 - (latNumber / latitudeBands);   // v
+	//		static_cast<float>()
+
+			vs.texCoord.u = 1 - (static_cast<float>(longNumber) / static_cast<float>(longitudeBands)); // u   
+			vs.texCoord.v = 1 - (static_cast<float>(latNumber) / static_cast<float>(latitudeBands));   // v
 
 			vs.normal.x = cosPhi * sinTheta;   // x
 			vs.normal.y = cosTheta;            // y
