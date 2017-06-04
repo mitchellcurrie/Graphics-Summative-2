@@ -138,6 +138,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="TessModel.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="Terrain.h" />
+    <ClInclude Include="TessModel.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +167,10 @@
     <None Include="assets\shaders\skybox.vs" />
     <None Include="assets\shaders\specular.fs" />
     <None Include="assets\shaders\specular.vs" />
+    <None Include="assets\shaders\TessModel.fs" />
+    <None Include="assets\shaders\TessModel.tcs" />
+    <None Include="assets\shaders\TessModel.tes" />
+    <None Include="assets\shaders\TessModel.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

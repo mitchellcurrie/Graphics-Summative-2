@@ -24,4 +24,11 @@ public:
 	GLuint CreateProgram(char* VertexShaderFilename,
 						 char* FragmentShaderFilename,
 						 char* GeometryShaderFilename);
+
+	GLuint CreateProgram(char* VertexShaderFilename,
+					 	 char* FragmentShaderFilename,
+					 	 char* TessControlShaderFilename,
+						 char* TessEvalShaderFilename);
+
+
 };

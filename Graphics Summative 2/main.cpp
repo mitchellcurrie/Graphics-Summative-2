@@ -21,6 +21,7 @@
 #include "model.h"
 #include "terrain.h"
 #include "GeometryModel.h"
+#include "TessModel.h"
 #include <string>
 
 #define DOWN 1
@@ -48,6 +49,7 @@ GameModel* ReflectedCube;
 GameModel* LightSphere;
 Terrain* terrain;
 GeometryModel* geomModel;
+TessModel* tessModel;
 
 // Mouse
 unsigned char mouseState[3];
@@ -201,6 +203,12 @@ int main(int argc, char **argv) {
 	geomModel = new GeometryModel(geomProgram, camera);
 	geomModel->SetPosition(glm::vec3(5.0f + fMoveX, 19.0f + fMoveY, -20.0f));
 
+	// Tesselation Model
+
+	GLuint tessProgram = shaderLoader.CreateProgram("assets/shaders/TessModel.vs", "assets/shaders/TessModel.fs",
+		"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
+	tessModel = new TessModel (tessProgram, camera);
+	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 6.0f + fMoveY, 0.0f));
 
 	// -- Object creation
 	glutDisplayFunc(Render);
@@ -235,7 +243,7 @@ void Render() {
 
 	Castle->Draw();
 	Nanosuit->Draw();
-//	Cube->RenderStencil(Cube, Mirror, ReflectedCube);
+	Cube->RenderStencil(Cube, Mirror, ReflectedCube);
 
 	LightSphere->Render();
 
@@ -245,6 +253,8 @@ void Render() {
 	terrain->draw();
 
 	geomModel->Render();
+	
+	tessModel->render();
 
 	glutSwapBuffers();
 
@@ -327,6 +337,10 @@ void Update() {
 		camera->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 8));
 		light->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 0));
 	}
+
+	// Tess Model
+
+	tessModel->SetDistanceToCamera(tessModel->GetPostion(), camera->GetPosition());
 }
 
 void KeyDown(unsigned char key, int x, int y) {
