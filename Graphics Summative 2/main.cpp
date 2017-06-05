@@ -115,7 +115,7 @@ int main(int argc, char **argv) {
 
 	// -- Object creation
 	camera = new Camera(vec3(0 + iMoveX, 4 + iMoveY, 8), ut->WIDTH, ut->HEIGHT);
-	camera->SetSpeed(0.03f);
+	camera->SetSpeed(0.4f);  // was 0.03
 	light = new Light(vec3(0 + iMoveX, 4 + iMoveY, 0), vec3(0.5f, 0.5f, 0.5f));
 	light->SetSpeed(0.04f);
 
@@ -346,7 +346,9 @@ void Update() {
 	tessModel->SetDistanceToCamera(tessModel->GetPostion(), camera->GetPosition());
 
 	// Adjust camera to terrain
-	//camera->AdjustToTerrain();
+	//camera->AdjustToTerrain(terrain->GetVertices());
+	camera->AdjustToTerrainSimple(terrain->GetVertices());
+	//std::cout << camera->GetPosition().x << "," << camera->GetPosition().y << "," << camera->GetPosition().z << endl;
 }
 
 void KeyDown(unsigned char key, int x, int y) {

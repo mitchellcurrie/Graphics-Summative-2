@@ -116,52 +116,76 @@ void Camera::MoveDown() {
 	position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
-void Camera::AdjustToTerrain()
+//void Camera::AdjustToTerrain(std::vector<VertexFormat> _terrainVertices)
+//{
+//	int z = static_cast<int>(position.z);
+//	int x = static_cast<int>(position.x);
+//	bool moveSet = false;
+//	
+//	for (auto itr = _terrainVertices.begin(); itr != _terrainVertices.end(); itr++)
+//	{
+//	/*	if ((abs(itr->pos.x - position.x) > 100.0f) && (abs(itr->pos.z - position.z) > 100.0f))
+//		{
+//			for (size_t i = 0; i < 50; i++)
+//			{
+//				itr++;
+//			}
+//		}*/
+//
+//		//if ((abs(itr->pos.x - position.x) > 20.0f) && (abs(itr->pos.z - position.z) > 20.0f))
+//		//{
+//		//	for (size_t i = 0; i < 10; i++)
+//		//	{
+//		//		itr++;
+//		//	}
+//		//}
+//
+//		if (!moveSet)
+//		{
+//			int move = (256 - z) * 256;
+//			itr += move + x - 1;
+//			moveSet = true;
+//		}
+//			
+//			
+//		if ((abs(itr->pos.x - position.x) < 2.0f) && (abs(itr->pos.z - position.z) < 2.0f))
+//		{
+//			position.y = itr->pos.y + 0.3f;
+//			std::cout << "Match!";
+//			return;
+//		}
+//
+//
+//		if (_terrainVertices.end() - itr < 4)
+//		{
+//			std::cout << "No!";
+//			return;
+//		}
+//			
+//		itr += 3;
+//	}
+//
+//	std::cout << "No!";
+//}
+
+void Camera::AdjustToTerrainSimple(std::vector<VertexFormat> _terrainVertices)
 {
-	for (auto itr = closeTerrainVertices.begin(); itr != closeTerrainVertices.end(); itr++)
-	{
-	/*	if ((abs(itr->pos.x - position.x) > 100.0f) && (abs(itr->pos.z - position.z) > 100.0f))
-		{
-			for (size_t i = 0; i < 50; i++)
-			{
-				itr++;
-			}
-		}*/
+	int z = static_cast<int>(position.z);
+	int x = static_cast<int>(position.x);
 
-		//if ((abs(itr->pos.x - position.x) > 20.0f) && (abs(itr->pos.z - position.z) > 20.0f))
-		//{
-		//	for (size_t i = 0; i < 10; i++)
-		//	{
-		//		itr++;
-		//	}
-		//}
-			
-		if ((abs(itr->pos.x - position.x) < 0.5f) && (abs(itr->pos.z - position.z) < 0.5f))
-		{
-			position.y = itr->pos.y + 1.0f;
-			std::cout << "Match!";
-			return;
-		}
+	int move = ((256 - z) * 513) + x + 256;
 
-		//if (_terrainVertices.end() - itr < 400)
-		//{
-		//	std::cout << "No!";
-		//	return;
-		//}
-		//	
-		//itr += 400;
-	}
-
-	std::cout << "No!";
+	position.y = _terrainVertices.at(move).pos.y + 0.3f;
 }
 
-void Camera::AddTerrainVertices(std::vector<VertexFormat> _terrainVertices)
-{
-	for (auto itr = _terrainVertices.begin(); itr != _terrainVertices.end(); itr++)
-	{
-		if ((abs(itr->pos.x - position.x) < 10.0f) && (abs(itr->pos.z - position.z) < 10.0f))
-		{
-			closeTerrainVertices.push_back(*itr);
-		}
-	}
-}
+
+//void Camera::AddTerrainVertices(std::vector<VertexFormat> _terrainVertices)
+//{
+//	//for (auto itr = _terrainVertices.begin(); itr != _terrainVertices.end(); itr++)
+//	//{
+//	//	if ((abs(itr->pos.x - position.x) < 10.0f) && (abs(itr->pos.z - position.z) < 10.0f))
+//	//	{
+//	//		closeTerrainVertices.push_back(*itr);
+//	//	}
+//	//}
+//}

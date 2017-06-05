@@ -26,8 +26,9 @@ public:
 	void MoveUp();
 	void MoveDown();
 
-	void AdjustToTerrain();
-	void AddTerrainVertices(std::vector<VertexFormat> _terrainVertices);
+//	void AdjustToTerrain(std::vector<VertexFormat> _terrainVertices);
+	void AdjustToTerrainSimple(std::vector<VertexFormat> _terrainVertices);
+//	void AddTerrainVertices(std::vector<VertexFormat> _terrainVertices);
 
 private:
 	int width, height;
