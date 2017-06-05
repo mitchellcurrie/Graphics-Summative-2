@@ -38,4 +38,6 @@ public:
 	void buildBuffers();
 	GLuint setTexture(std::string  texFileName);
 	void draw();
+
+	std::vector<VertexFormat> GetVertices();
 };

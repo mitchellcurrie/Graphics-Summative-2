@@ -210,6 +210,10 @@ int main(int argc, char **argv) {
 	tessModel = new TessModel (tessProgram, camera);
 	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 6.0f + fMoveY, 0.0f));
 
+	// Camera for terrain
+
+	//camera->AddTerrainVertices(terrain->GetVertices());
+
 	// -- Object creation
 	glutDisplayFunc(Render);
 	glutKeyboardFunc(KeyDown);
@@ -339,8 +343,10 @@ void Update() {
 	}
 
 	// Tess Model
-
 	tessModel->SetDistanceToCamera(tessModel->GetPostion(), camera->GetPosition());
+
+	// Adjust camera to terrain
+	//camera->AdjustToTerrain();
 }
 
 void KeyDown(unsigned char key, int x, int y) {

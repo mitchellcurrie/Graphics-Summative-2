@@ -305,3 +305,8 @@ void Terrain::draw(){
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
+
+std::vector<VertexFormat> Terrain::GetVertices()
+{
+	return vertices;
+}

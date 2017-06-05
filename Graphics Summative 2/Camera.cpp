@@ -115,3 +115,53 @@ void Camera::MoveUp() {
 void Camera::MoveDown() {
 	position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
+
+void Camera::AdjustToTerrain()
+{
+	for (auto itr = closeTerrainVertices.begin(); itr != closeTerrainVertices.end(); itr++)
+	{
+	/*	if ((abs(itr->pos.x - position.x) > 100.0f) && (abs(itr->pos.z - position.z) > 100.0f))
+		{
+			for (size_t i = 0; i < 50; i++)
+			{
+				itr++;
+			}
+		}*/
+
+		//if ((abs(itr->pos.x - position.x) > 20.0f) && (abs(itr->pos.z - position.z) > 20.0f))
+		//{
+		//	for (size_t i = 0; i < 10; i++)
+		//	{
+		//		itr++;
+		//	}
+		//}
+			
+		if ((abs(itr->pos.x - position.x) < 0.5f) && (abs(itr->pos.z - position.z) < 0.5f))
+		{
+			position.y = itr->pos.y + 1.0f;
+			std::cout << "Match!";
+			return;
+		}
+
+		//if (_terrainVertices.end() - itr < 400)
+		//{
+		//	std::cout << "No!";
+		//	return;
+		//}
+		//	
+		//itr += 400;
+	}
+
+	std::cout << "No!";
+}
+
+void Camera::AddTerrainVertices(std::vector<VertexFormat> _terrainVertices)
+{
+	for (auto itr = _terrainVertices.begin(); itr != _terrainVertices.end(); itr++)
+	{
+		if ((abs(itr->pos.x - position.x) < 10.0f) && (abs(itr->pos.z - position.z) < 10.0f))
+		{
+			closeTerrainVertices.push_back(*itr);
+		}
+	}
+}

@@ -13,6 +13,8 @@ public:
 	glm::mat4 GetProjectionMatrix() const;
 	glm::vec3 GetPosition() const;
 
+	std::vector<VertexFormat> closeTerrainVertices;
+
 	void SetSpeed(float _speed);
 	void SetPosition(glm::vec3 position);
 	void SetCameraForward(glm::vec3 _forward);
@@ -23,6 +25,9 @@ public:
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
+
+	void AdjustToTerrain();
+	void AddTerrainVertices(std::vector<VertexFormat> _terrainVertices);
 
 private:
 	int width, height;
