@@ -24,6 +24,15 @@
 #include "TessModel.h"
 #include <string>
 
+// PCG
+#include <cmath>
+#include "RAW.h"
+#include "PerlinNoise.h"
+
+#define SEED 0
+
+const std::wstring FILENAME = L"assets/heightmap/PCG_MAP.raw";
+
 #define DOWN 1
 #define UP 0
 
@@ -84,8 +93,7 @@ void KeyUp(unsigned char key, int x, int y);
 void mousePassiveMove(int x, int y);
 void mouse(int button, int button_state, int x, int y);
 
-void AnimateModel(GameModel* _model, vec3 _moveDirection, float _deltaTime);
-void AnimateModel(Model* _model, vec3 _moveDirection, float _deltaTime);
+void GeneratePerlinNoiseMap(unsigned int width, unsigned int height, string fileName);
 
 int main(int argc, char **argv) {
 
@@ -98,7 +106,7 @@ int main(int argc, char **argv) {
 	glutSetOption(GLUT_MULTISAMPLE, 8);
 	glEnable(GL_MULTISAMPLE);
 	glutCreateWindow("Advanced Graphics - Summative 1 - Juan Rodriguez and Mitchell Currie");
-	
+
 
 	glClearColor(1.0f, 0.0f, 0.0f, 1.0f);               // Set background color to black and opaque
 	glClearDepth(1.0f);                                 // Set background depth to farthest
@@ -106,11 +114,11 @@ int main(int argc, char **argv) {
 	glDepthFunc(GL_LEQUAL);                             // Set the type of depth-test
 	glShadeModel(GL_SMOOTH);                            // Enable smooth shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
-	
+
 
 	// To test whether backface culling is working, wire draw mode
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		
+
 	glewInit();
 
 	// -- Object creation
@@ -187,17 +195,20 @@ int main(int argc, char **argv) {
 	Castle->SetPosition(vec3(0 + fMoveX, 1.6f + fMoveY, 0));
 	Castle->SetScale(vec3(0.1f));
 
+	string FILENAME_string = string(FILENAME.begin(), FILENAME.end());
+	GeneratePerlinNoiseMap(513, 513, FILENAME_string);
+	
 	// Terrain
 	GLuint terrainProgram = shaderLoader.CreateProgram("assets/shaders/heightmap.vs", "assets/shaders/heightmap.fs");
-	terrain = new Terrain(L"assets/heightmap/terrain_1.raw",
-						   "assets/heightmap/sand.jpg",
-						   "assets/heightmap/grass.jpg",
-						   "assets/heightmap/rock.jpg",
-						   terrainProgram,
-						   camera,
-						   light);
+	terrain = new Terrain(FILENAME,
+						  "assets/heightmap/sand.jpg",
+						  "assets/heightmap/grass.jpg",
+						  "assets/heightmap/rock.jpg",
+						  terrainProgram,
+						  camera,
+						  light);
 
-	// Geometry Model
+   // Geometry Model
 	GLuint geomProgram = shaderLoader.CreateProgram("assets/shaders/geometry.vs", "assets/shaders/geometry.fs",
 													"assets/shaders/geometry.gs");
 	geomModel = new GeometryModel(geomProgram, camera);
@@ -206,8 +217,8 @@ int main(int argc, char **argv) {
 	// Tesselation Model
 
 	GLuint tessProgram = shaderLoader.CreateProgram("assets/shaders/TessModel.vs", "assets/shaders/TessModel.fs",
-		"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
-	tessModel = new TessModel (tessProgram, camera);
+													"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
+	tessModel = new TessModel(tessProgram, camera);
 	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 6.0f + fMoveY, 0.0f));
 
 	// Camera for terrain
@@ -239,7 +250,7 @@ void Render() {
 	// Backface culling for sphere
 	if (Culling)
 		glEnable(GL_CULL_FACE);
-			
+
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
 	Sphere->Render();
@@ -257,7 +268,7 @@ void Render() {
 	terrain->draw();
 
 	geomModel->Render();
-	
+
 	tessModel->render();
 
 	glutSwapBuffers();
@@ -321,7 +332,7 @@ void Update() {
 
 	// Wire draw
 	if (KeyCode[(unsigned char)'v'] == KeyState::Pressed) {
-		WireDraw = true;	
+		WireDraw = true;
 	}
 
 	if (KeyCode[(unsigned char)'v'] == KeyState::Released) {
@@ -365,29 +376,25 @@ void KeyUp(unsigned char key, int x, int y) {
 
 }
 
-void mouse(int button, int button_state, int x, int y)
-{
-	#define state ((button_state == GLUT_DOWN) ? DOWN : UP)
+void mouse(int button, int button_state, int x, int y) {
+#define state ((button_state == GLUT_DOWN) ? DOWN : UP)
 
-	switch (button)
-	{
-	case GLUT_LEFT_BUTTON:
-		mouseState[MOUSE_LEFT] = state;
-		break;
-	case GLUT_MIDDLE_BUTTON:
-		mouseState[MOUSE_MIDDLE] = state;
-		break;
+	switch (button) {
+		case GLUT_LEFT_BUTTON:
+			mouseState[MOUSE_LEFT] = state;
+			break;
+		case GLUT_MIDDLE_BUTTON:
+			mouseState[MOUSE_MIDDLE] = state;
+			break;
 
-	case GLUT_RIGHT_BUTTON:
-		mouseState[MOUSE_RIGHT] = state;
-		break;
-	}	
+		case GLUT_RIGHT_BUTTON:
+			mouseState[MOUSE_RIGHT] = state;
+			break;
+	}
 }
 
-void mousePassiveMove(int x, int y)
-{
-	if (firstMouse)
-	{
+void mousePassiveMove(int x, int y) {
+	if (firstMouse) {
 		lastX = x;
 		lastY = y;
 		firstMouse = false;
@@ -419,22 +426,39 @@ void mousePassiveMove(int x, int y)
 
 }
 
-//// Mouse movement
-//glm::vec2 m_MousePos;
-//void MouseGL(int button, int state, int x, int y)
-//{
-//	m_MousePos = glm::ivec2(x, y);
-//}
-//
-//void MotionGL(int x, int y)
-//{
-//	glm::ivec2 mousePos = glm::ivec2(x, y);
-//	glm::vec2 delta = glm::vec2(mousePos) - m_MousePos;
-//	m_MousePos = mousePos;
-//
-//	glm::quat rotX = glm::angleAxis<float>(glm::radians(delta.y) * 0.5f, glm::vec3(1, 0, 0));
-//	glm::quat rotY = glm::angleAxis<float>(glm::radians(delta.x) * 0.5f, glm::vec3(0, 1, 0));
-//
-//	//camera.Rotate(-rotX * -rotY);
-//
-//}
+void GeneratePerlinNoiseMap(unsigned int width, unsigned int height, string fileName) {
+
+	// Create an empty PPM image
+	RAW image(width, height);
+
+	// Create a PerlinNoise object with the reference permutation vector
+	PerlinNoise pn(SEED);
+
+	unsigned int iteration = 0;
+
+	// Visit every pixel of the image and assign a color generated with Perlin noise
+
+	for (unsigned int y = 0; y < height; ++y) {
+
+		for (unsigned int x = 0; x < width; ++x) {
+
+			double sampleX = (double)x / ((double)width);
+			double sampleY = (double)y / ((double)height);
+
+			// Typical Perlin noise
+			double n = pn.GenerateNoise(10 * sampleX, 10 * sampleY, 0.8);
+
+			// Map the values to the image
+			image.x[iteration] = floor(255 * n);
+			image.y[iteration] = floor(255 * n);
+			image.z[iteration] = floor(255 * n);
+
+			iteration++;
+
+		}
+	}
+
+	// Save the image in a binary PPM file
+	image.Write(fileName);
+
+}

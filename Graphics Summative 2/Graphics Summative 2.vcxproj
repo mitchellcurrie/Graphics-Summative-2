@@ -135,6 +135,8 @@
     <ClCompile Include="GeometryModel.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PerlinNoise.cpp" />
+    <ClCompile Include="RAW.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderLoader.cpp" />
     <ClCompile Include="Terrain.cpp" />
@@ -149,6 +151,8 @@
     <ClInclude Include="Light.h" />
     <ClInclude Include="mesh.h" />
     <ClInclude Include="model.h" />
+    <ClInclude Include="PerlinNoise.h" />
+    <ClInclude Include="RAW.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ShaderLoader.h" />
     <ClInclude Include="Terrain.h" />

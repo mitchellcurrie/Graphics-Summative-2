@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="PerlinNoise.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="RAW.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cubemap.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameModel.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryModel.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLoader.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="TessModel.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="RAW.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoise.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cubemap.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="TessModel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLoader.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="model.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryModel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\geometry.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\geometry.gs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\geometry.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\heightmap.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\heightmap.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\model.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\model.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\skybox.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\skybox.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\specular.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\specular.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\TessModel.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\TessModel.vs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\TessModel.tcs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\TessModel.tes">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{ec9c32c6-71f0-4591-a2d2-5551f710e5fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{d166edca-cdb5-472c-83fe-f270463f30f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{fee3ac16-4e24-4cb6-a644-dd0c39d1a0ca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

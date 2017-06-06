@@ -19,6 +19,4 @@ void main()
 	vs_out.position = gl_Position;
 	vs_out.mvp = mvp;
 
-
-
 }

@@ -19,10 +19,6 @@ enum KeyState {
 	Pressed
 };
 
-/*
-Model Type
-*/
-
 enum ModelType {
 
 	kTriangle = 0,
