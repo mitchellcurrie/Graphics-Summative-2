@@ -360,6 +360,8 @@ void Update() {
 	//camera->AdjustToTerrain(terrain->GetVertices());
 	camera->AdjustToTerrainSimple(terrain->GetVertices());
 	//std::cout << camera->GetPosition().x << "," << camera->GetPosition().y << "," << camera->GetPosition().z << endl;
+
+	//camera->RotationAdjustment(camera->GetPosition() * 10.0f * deltaTime);
 }
 
 void KeyDown(unsigned char key, int x, int y) {
@@ -423,6 +425,11 @@ void mousePassiveMove(int x, int y) {
 	front.y = sin(glm::radians(pitch));
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	camera->SetCameraForward(glm::normalize(front));
+
+	// Camera adjustment
+	//camera->SetRotation(glm::quat());
+	//camera->Rotate(glm::angleAxis(yaw, glm::vec3(0, 1, 0)));
+	//camera->Rotate(glm::angleAxis(pitch, glm::vec3(1, 0, 0)));
 
 }
 

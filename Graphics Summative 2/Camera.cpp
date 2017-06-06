@@ -74,6 +74,21 @@ glm::vec3 Camera::GetPosition() const {
 	return (position);
 }
 
+//void Camera::RotationAdjustment(const glm::vec3&delta)
+//{
+//	position += rotation * delta;
+//}
+//
+//void Camera::SetRotation(const glm::quat & _rotation)
+//{
+//	rotation = _rotation;
+//}
+//
+//void Camera::Rotate(const glm::quat& _rotation)
+//{
+//	rotation = rotation * _rotation;
+//}
+
 void Camera::SetSpeed(float _speed) {
 	this->speed = _speed;
 }
