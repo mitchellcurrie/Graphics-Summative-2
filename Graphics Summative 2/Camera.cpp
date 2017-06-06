@@ -89,22 +89,26 @@ void Camera::SetCameraForward(glm::vec3 _forward)
 
 void Camera::MoveForward() {
 	
-	position -= glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+	if (position.z > -252.0f)
+		position -= glm::vec3(0.0f, 0.0f, 1.0f) * speed;
 }
 
 void Camera::MoveBackward() {
 	
-	position += glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+	if (position.z < 252.0f)
+		position += glm::vec3(0.0f, 0.0f, 1.0f) * speed;
 }
 
 void Camera::MoveLeft() {
 	
-	position -= glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+	if (position.x > -252.0f)
+		position -= glm::vec3(1.0f, 0.0f, 0.0f) * speed;
 }
 
 void Camera::MoveRight() {
 	
-	position += glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+	if (position.x < 252.0f)
+		position += glm::vec3(1.0f, 0.0f, 0.0f) * speed;
 }
 
 void Camera::MoveUp() {
@@ -173,9 +177,11 @@ void Camera::AdjustToTerrainSimple(std::vector<VertexFormat> _terrainVertices)
 	int z = static_cast<int>(position.z);
 	int x = static_cast<int>(position.x);
 
-	int move = ((256 - z) * 513) + x + 256;
-
-	position.y = _terrainVertices.at(move).pos.y + 0.3f;
+	if (z <= 256 && z >= -256 && x <= 256 && x >= -256)
+	{
+		int move = ((256 - z) * 513) + x + 256;
+		position.y = _terrainVertices.at(move).pos.y + 0.3f;
+	}
 }
 
 

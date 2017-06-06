@@ -123,7 +123,7 @@ int main(int argc, char **argv) {
 
 	// -- Object creation
 	camera = new Camera(vec3(0 + iMoveX, 4 + iMoveY, 8), ut->WIDTH, ut->HEIGHT);
-	camera->SetSpeed(0.4f);  // was 0.03
+	camera->SetSpeed(0.5f);  // was 0.03
 	light = new Light(vec3(0 + iMoveX, 4 + iMoveY, 0), vec3(0.5f, 0.5f, 0.5f));
 	light->SetSpeed(0.04f);
 
