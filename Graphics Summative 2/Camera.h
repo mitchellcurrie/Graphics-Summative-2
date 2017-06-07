@@ -12,9 +12,6 @@ public:
 	glm::mat4 GetViewMatrix() const;
 	glm::mat4 GetProjectionMatrix() const;
 	glm::vec3 GetPosition() const;
-	//void RotationAdjustment(const glm::vec3&delta);
-	//void SetRotation(const glm::quat & _rotation);
-	//void Rotate(const glm::quat& _rotation);
 
 	std::vector<VertexFormat> closeTerrainVertices;
 
@@ -40,6 +37,7 @@ private:
 
 	glm::vec3 position, up, forward;
 	glm::quat rotation;
+	GLfloat xRot, yRot, zRot;
 
 	glm::mat4 viewMatrix, projectionMatrix;
 

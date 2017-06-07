@@ -74,21 +74,6 @@ glm::vec3 Camera::GetPosition() const {
 	return (position);
 }
 
-//void Camera::RotationAdjustment(const glm::vec3&delta)
-//{
-//	position += rotation * delta;
-//}
-//
-//void Camera::SetRotation(const glm::quat & _rotation)
-//{
-//	rotation = _rotation;
-//}
-//
-//void Camera::Rotate(const glm::quat& _rotation)
-//{
-//	rotation = rotation * _rotation;
-//}
-
 void Camera::SetSpeed(float _speed) {
 	this->speed = _speed;
 }
@@ -105,25 +90,29 @@ void Camera::SetCameraForward(glm::vec3 _forward)
 void Camera::MoveForward() {
 	
 	if (position.z > -252.0f)
-		position -= glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+		//position -= glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+		position += normalize(forward) * speed;
 }
 
 void Camera::MoveBackward() {
 	
 	if (position.z < 252.0f)
-		position += glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+		//position += glm::vec3(0.0f, 0.0f, 1.0f) * speed;
+		position -= normalize(forward) * speed;
 }
 
 void Camera::MoveLeft() {
 	
 	if (position.x > -252.0f)
-		position -= glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+		//position -= glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+		position += normalize(glm::vec3(forward.z, forward.y, -forward.x));
 }
 
 void Camera::MoveRight() {
 	
 	if (position.x < 252.0f)
-		position += glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+		//position += glm::vec3(1.0f, 0.0f, 0.0f) * speed;
+		position -= normalize(glm::vec3(forward.z, forward.y, -forward.x));
 }
 
 void Camera::MoveUp() {
