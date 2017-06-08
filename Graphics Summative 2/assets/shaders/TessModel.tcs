@@ -9,20 +9,20 @@ void main()
 {
 	float x = 1;
 
-	if (distanceToCamera < 5.0f)
+	if (distanceToCamera < 10.0f)
 	{
 		x = 1.5f;
 	}
-	else if (distanceToCamera < 10.0f)
+	else if (distanceToCamera < 15.0f)
 	{
 		x = 1.0f;
 	}
-	else if (distanceToCamera < 15.0f)
+	else if (distanceToCamera < 20.0f)
 	{
 		x = 0.5f;
 	}
 
-	else // if (distanceToCamera < 20.0f)
+	else // if (distanceToCamera < 30.0f)
 	{
 		x = 0.25f;
 	}

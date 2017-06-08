@@ -124,11 +124,11 @@ void Camera::MoveRight() {
 
 void Camera::MoveUp() {
 	
-	//position += glm::vec3(0.0f, 1.0f, 0.0f) * speed;
+	position += glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
 void Camera::MoveDown() {
-	//position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
+	position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
 //void Camera::AdjustToTerrain(std::vector<VertexFormat> _terrainVertices)

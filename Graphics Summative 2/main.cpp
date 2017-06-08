@@ -29,7 +29,7 @@
 #include "RAW.h"
 #include "PerlinNoise.h"
 
-#define SEED 0
+#define SEED 1
 
 const std::wstring FILENAME = L"assets/heightmap/PCG_MAP.raw";
 
@@ -78,7 +78,7 @@ GLfloat lastY = Utils::HEIGHT / 2.0;
 bool firstMouse = true;
 
 // Move everything
-float fMoveY = 42.9f;
+float fMoveY = 87.9f;
 float iMoveY = static_cast<float>(fMoveY);
 
 float fMoveX = 13.0f;
@@ -132,7 +132,7 @@ int main(int argc, char **argv) {
 	// -- Object creation
 	camera = new Camera(vec3(0 + iMoveX, 4 + iMoveY, 8), ut->WIDTH, ut->HEIGHT);
 	camera->SetSpeed(0.5f);  // was 0.03
-	light = new Light(vec3(0 + iMoveX, 4 + iMoveY, 0), vec3(0.5f, 0.5f, 0.5f));
+	light = new Light(vec3(0 + iMoveX, 5 + iMoveY, 0), vec3(0.5f, 0.5f, 0.5f));
 	light->SetSpeed(0.04f);
 
 	// Sphere
@@ -226,7 +226,7 @@ int main(int argc, char **argv) {
 	GLuint tessProgram = shaderLoader.CreateProgram("assets/shaders/TessModel.vs", "assets/shaders/TessModel.fs",
 		"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
 	tessModel = new TessModel(tessProgram, camera);
-	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 6.0f + fMoveY, 0.0f));
+	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 3.0f + fMoveY, 0.0f));
 
 	// Bullets
 
