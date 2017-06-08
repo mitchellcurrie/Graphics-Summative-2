@@ -25,12 +25,18 @@ public:
 	void SetProgram(GLuint program);
 	void SetTexture(std::string texFileName);
 	void SetSpecularStrength(float strength);
+	void SetBulletActivity(bool _b);
+	void SetVelocity(glm::vec3 _velocity);
+
+	bool isBulletActive();
+
 
 	glm::vec3 GetPosition();
 	glm::vec3 GetScale();
 	glm::vec3 GetRotation();
 	glm::vec3 GetRotationAxis();
 	glm::vec3 GetColor();
+	float GetSpeed();
 
 	void MoveForward();
 	void MoveBackward();
@@ -38,6 +44,7 @@ public:
 	void MoveRight();
 	void MoveUp();
 	void MoveDown();
+	void Move();
 
 	void Rotate(glm::vec3 axis);
 
@@ -47,6 +54,7 @@ private:
 	Light* light;
 
 	bool bIsTextureSet = false;
+	bool bulletActive = false;
 
 	float speed;
 
@@ -58,6 +66,8 @@ private:
 	glm::vec3 angle;
 	glm::vec3 rotationAxis;
 	glm::vec3 color;
+
+	glm::vec3 velocity;
 
 	GLuint vao;
 	GLuint vbo;

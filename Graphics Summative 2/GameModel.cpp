@@ -210,6 +210,11 @@ void GameModel::MoveDown() {
 	position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
+void GameModel::Move()
+{
+	position += velocity;
+}
+
 void GameModel::Rotate(glm::vec3 axis) {
 
 	this->angle.x += axis.x; //* speed * 20;
@@ -294,6 +299,21 @@ void GameModel::SetSpecularStrength(float strength) {
 	specularStrength = strength;
 }
 
+void GameModel::SetBulletActivity(bool _b)
+{
+	bulletActive = _b;
+}
+
+void GameModel::SetVelocity(glm::vec3 _velocity)
+{
+	velocity = _velocity;
+}
+
+bool GameModel::isBulletActive()
+{
+	return bulletActive;
+}
+
 glm::vec3 GameModel::GetPosition() {
 
 	return position;
@@ -302,6 +322,11 @@ glm::vec3 GameModel::GetPosition() {
 glm::vec3 GameModel::GetColor() {
 
 	return this->color;
+}
+
+float GameModel::GetSpeed()
+{
+	return speed;
 }
 
 glm::vec3 GameModel::GetScale() {

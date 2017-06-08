@@ -74,6 +74,11 @@ glm::vec3 Camera::GetPosition() const {
 	return (position);
 }
 
+glm::vec3 Camera::GetCameraForward()
+{
+	return forward;
+}
+
 void Camera::SetSpeed(float _speed) {
 	this->speed = _speed;
 }

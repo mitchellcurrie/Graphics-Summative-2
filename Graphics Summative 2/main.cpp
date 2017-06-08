@@ -60,6 +60,14 @@ Terrain* terrain;
 GeometryModel* geomModel;
 TessModel* tessModel;
 
+// Bullets
+GameModel* bullet;
+std::vector<GameModel*> bulletVector;
+float bulletFireRate = 0.3f;
+float TimeNew = 0.0f;
+float TimeOld = 0.0f;
+float bulletTimer = 0.0f;
+
 // Mouse
 unsigned char mouseState[3];
 
@@ -152,30 +160,30 @@ int main(int argc, char **argv) {
 	GLuint cubemapProgram = shaderLoader.CreateProgram("assets/shaders/skybox.vs", "assets/shaders/skybox.fs");
 	skybox = new Cubemap(cubemapProgram, camera);
 
-	// Cube
-	GLuint cubeProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
-	Cube = new GameModel(ModelType::kCube, camera, "assets/textures/triangle.jpg", light, 0.65f, 4.3f);
-	Cube->SetProgram(cubeProgram);
-	Cube->SetPosition(vec3(6, -0.5f, 0));
-	Cube->SetSpeed(0.005f);
-	Cube->SetScale(vec3(0.7f, 0.7f, 0.7f));
+	//// Cube
+	//GLuint cubeProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	//Cube = new GameModel(ModelType::kCube, camera, "assets/textures/triangle.jpg", light, 0.65f, 4.3f);
+	//Cube->SetProgram(cubeProgram);
+	//Cube->SetPosition(vec3(6, -0.5f, 0));
+	//Cube->SetSpeed(0.005f);
+	//Cube->SetScale(vec3(0.7f, 0.7f, 0.7f));
 
-	// Reflected Cube
-	GLuint refCubeProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
-	ReflectedCube = new GameModel(ModelType::kCube, camera, "assets/textures/triangle.jpg", light, 0.2f, 0.5f);
-	ReflectedCube->SetProgram(refCubeProgram);
-	ReflectedCube->SetPosition(vec3(6, -1.9f, 0));
-	ReflectedCube->SetSpeed(0.005f);
-	ReflectedCube->SetScale(vec3(0.7f, 0.7f, 0.7f));
+	//// Reflected Cube
+	//GLuint refCubeProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	//ReflectedCube = new GameModel(ModelType::kCube, camera, "assets/textures/triangle.jpg", light, 0.2f, 0.5f);
+	//ReflectedCube->SetProgram(refCubeProgram);
+	//ReflectedCube->SetPosition(vec3(6, -1.9f, 0));
+	//ReflectedCube->SetSpeed(0.005f);
+	//ReflectedCube->SetScale(vec3(0.7f, 0.7f, 0.7f));
 
-	// Mirror
-	GLuint mirrorProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
-	Mirror = new GameModel(ModelType::kQuad, camera, "assets/textures/black.jpg", light, 0.65f, 4.3f);
-	Mirror->SetProgram(mirrorProgram);
-	Mirror->SetPosition(vec3(6, -1.2f, 0));
-	//Mirror->SetSpeed(0.0f);
-	Mirror->Rotate(vec3(90.0f, 0.0f, 0.0f));
-	Mirror->SetScale(vec3(2.5f, 2.5f, 2.5f));
+	//// Mirror
+	//GLuint mirrorProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+	//Mirror = new GameModel(ModelType::kQuad, camera, "assets/textures/black.jpg", light, 0.65f, 4.3f);
+	//Mirror->SetProgram(mirrorProgram);
+	//Mirror->SetPosition(vec3(6, -1.2f, 0));
+	////Mirror->SetSpeed(0.0f);
+	//Mirror->Rotate(vec3(90.0f, 0.0f, 0.0f));
+	//Mirror->SetScale(vec3(2.5f, 2.5f, 2.5f));
 
 	// Light Sphere
 	GLuint lightSphereProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
@@ -185,45 +193,56 @@ int main(int argc, char **argv) {
 	LightSphere->SetSpeed(0.005f);
 	LightSphere->SetScale(vec3(0.2f, 0.2f, 0.2f));
 
-	// Model
-	GLuint modelProgram = shaderLoader.CreateProgram("assets/shaders/model.vs", "assets/shaders/model.fs");
-	Nanosuit = new Model("assets/models/Nanosuit/nanosuit.obj", camera, modelProgram);
-	Nanosuit->SetPosition(vec3(-0.05f + fMoveX, 1.6f + fMoveY, 2.75));
-	Nanosuit->SetScale(vec3(0.04f));
+	//// Model
+	//GLuint modelProgram = shaderLoader.CreateProgram("assets/shaders/model.vs", "assets/shaders/model.fs");
+	//Nanosuit = new Model("assets/models/Nanosuit/nanosuit.obj", camera, modelProgram);
+	//Nanosuit->SetPosition(vec3(-0.05f + fMoveX, 1.6f + fMoveY, 2.75));
+	//Nanosuit->SetScale(vec3(0.04f));
 
-	Castle = new Model("assets/models/Castle/Castle OBJ.obj", camera, modelProgram);
-	Castle->SetPosition(vec3(0 + fMoveX, 1.6f + fMoveY, 0));
-	Castle->SetScale(vec3(0.1f));
+	//Castle = new Model("assets/models/Castle/Castle OBJ.obj", camera, modelProgram);
+	//Castle->SetPosition(vec3(0 + fMoveX, 1.6f + fMoveY, 0));
+	//Castle->SetScale(vec3(0.1f));
 
+	// Terrain
 	string FILENAME_string = string(FILENAME.begin(), FILENAME.end());
 	GeneratePerlinNoiseMap(513, 513, FILENAME_string);
-	
-	// Terrain
+
 	GLuint terrainProgram = shaderLoader.CreateProgram("assets/shaders/heightmap.vs", "assets/shaders/heightmap.fs");
 	terrain = new Terrain(FILENAME,
-						  "assets/heightmap/sand.jpg",
-						  "assets/heightmap/grass.jpg",
-						  "assets/heightmap/rock.jpg",
-						  terrainProgram,
-						  camera,
-						  light);
+		"assets/heightmap/sand.jpg",
+		"assets/heightmap/grass.jpg",
+		"assets/heightmap/rock.jpg",
+		terrainProgram,
+		camera,
+		light);
 
-   // Geometry Model
+	// Geometry Model
 	GLuint geomProgram = shaderLoader.CreateProgram("assets/shaders/geometry.vs", "assets/shaders/geometry.fs",
-													"assets/shaders/geometry.gs");
+		"assets/shaders/geometry.gs");
 	geomModel = new GeometryModel(geomProgram, camera);
 	geomModel->SetPosition(glm::vec3(5.0f + fMoveX, 19.0f + fMoveY, -20.0f));
 
 	// Tesselation Model
-
 	GLuint tessProgram = shaderLoader.CreateProgram("assets/shaders/TessModel.vs", "assets/shaders/TessModel.fs",
-													"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
+		"assets/shaders/TessModel.tcs", "assets/shaders/TessModel.tes");
 	tessModel = new TessModel(tessProgram, camera);
 	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 6.0f + fMoveY, 0.0f));
 
-	// Camera for terrain
+	// Bullets
 
-	//camera->AddTerrainVertices(terrain->GetVertices());
+	GLuint bulletProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
+
+	for (size_t x = 0; x < 20; x++)
+	{
+		bullet = new GameModel(ModelType::kCube, camera, "assets/textures/triangle.jpg", light, 0.65f, 4.3f);
+		bullet->SetProgram(bulletProgram);
+		bullet->SetPosition(vec3(0, -30, 0));
+		bullet->SetSpeed(5.0f);
+		bullet->SetScale(vec3(0.1f, 0.1f, 0.1f));
+		bulletVector.push_back(bullet);
+	}
+
+	TimeOld = static_cast<float>((GLfloat)glutGet(GLUT_ELAPSED_TIME));
 
 	// -- Object creation
 	glutDisplayFunc(Render);
@@ -256,9 +275,9 @@ void Render() {
 	Sphere->Render();
 	glDisable(GL_CULL_FACE);
 
-	Castle->Draw();
-	Nanosuit->Draw();
-	Cube->RenderStencil(Cube, Mirror, ReflectedCube);
+//	Castle->Draw();
+//	Nanosuit->Draw();
+	//Cube->RenderStencil(Cube, Mirror, ReflectedCube);
 
 	LightSphere->Render();
 
@@ -270,6 +289,12 @@ void Render() {
 	geomModel->Render();
 
 	tessModel->render();
+
+	for (auto itr = bulletVector.begin(); itr != bulletVector.end(); itr++)
+	{
+		if ((*itr)->isBulletActive())
+			(*itr)->Render();
+	}
 
 	glutSwapBuffers();
 
@@ -351,6 +376,43 @@ void Update() {
 	if ((KeyCode[(unsigned char)'r'] == KeyState::Pressed) || (KeyCode[(unsigned char)'R'] == KeyState::Pressed)) {
 		camera->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 8));
 		light->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 0));
+	}
+
+	TimeNew = static_cast<float>((GLfloat)glutGet(GLUT_ELAPSED_TIME));
+	bulletTimer += (TimeNew - TimeOld) / 1000.0f;
+	std::cout << bulletTimer << endl;
+
+	// Bullet firing
+	if ((KeyCode[32] == KeyState::Pressed) && (bulletTimer > bulletFireRate)){
+
+		for (auto itr = bulletVector.begin(); itr != bulletVector.end(); itr++)
+		{
+			if (((*itr)->isBulletActive()) == false)
+			{
+				(*itr)->SetBulletActivity(true);
+				(*itr)->SetPosition(camera->GetPosition() + vec3(1, 0, 3.0f));
+				(*itr)->SetVelocity(normalize(camera->GetCameraForward()) * (*itr)->GetSpeed());
+				break;
+			}			
+		}
+
+		bulletTimer = 0.0f;
+	}
+
+	TimeOld = TimeNew;
+
+	// Bullet movement and destruction
+	for (auto itr = bulletVector.begin(); itr != bulletVector.end(); itr++)
+	{
+		if (((*itr)->isBulletActive()) == true)
+		{
+			(*itr)->Move();
+
+			glm::vec3 pos = (*itr)->GetPosition();
+
+			if (pos.x > 300.0f || pos.x < -300.0f || pos.z > 300.0f || pos.z < -300.0f)
+				(*itr)->SetBulletActivity(false);
+		}
 	}
 
 	// Tess Model
