@@ -19,19 +19,19 @@ viewPosition;
 
 //vec3 ApplyLight(int lightType);
 
-vec3 spotLightColor = vec3(0.0f, 1.0f, 0.0f);
+// vec3 spotLightColor = vec3(0.0f, 1.0f, 0.0f);
 vec3 lightColorToUse;
 
 void main() {
 
-    for (int x = 0; x < 2; x++)
-    { 
+//    for (int x = 0; x < 2; x++)
+//    { 
         float attenuation = 1.0f;
 
-        if (x == 0)       
+ //       if (x == 0)       
              lightColorToUse = lightColor;
-        else
-            lightColorToUse = spotLightColor;
+//        else
+ //           lightColorToUse = spotLightColor;
 
         // Ambient light
         vec3 ambientValue = ambientStrength * lightColorToUse;
@@ -40,8 +40,8 @@ void main() {
         vec3 normal = normalize(OutNormVec);
         vec3 lightDir = normalize(lightPosition - OutFragPosition);
 
-        float difference = max(dot(normal, lightDir), 0.0f);
-        vec3 diffuseValue = difference * lightColorToUse;
+        float intensity = max(dot(normal, lightDir), 0.0f);
+        vec3 diffuseValue = intensity * lightColorToUse;
      
         // Specular light
         vec3 viewDir = normalize(viewPosition - OutFragPosition);
@@ -55,28 +55,49 @@ void main() {
         vec3 specularValue = spec * lightColorToUse * specularStrength;
 
 
-        ////// NEW ////
-
-        if (x == 1) // spotlight
-        {
-            vec3 coneDirection = vec3(1.0f, 0.0f, 0.0f);
-            float coneAngle = 12.0f; // degrees
-
-            float lightToSurfaceAngle = degrees(acos(dot(lightDir, normalize(coneDirection))));
-
-            if(lightToSurfaceAngle > coneAngle)
-            {
-                attenuation = 0.0f;
-            }
-        }
-
-        ////// END NEW //////
+//        // Spotlight
+//        if (x == 1) 
+//        {
+//            vec3 coneDirection = vec3(1.0f, 0.0f, 0.0f);
+//            float coneAngle = 12.0f; // degrees
+//
+//            float lightToSurfaceAngle = degrees(acos(dot(lightDir, normalize(coneDirection))));
+//
+//            if(lightToSurfaceAngle > coneAngle)
+//            {
+//                attenuation = 0.0f;
+//            }
+//        }
 
         // Final values
         vec3 finalObjectLight = (ambientValue + diffuseValue + specularValue) * objectColor * attenuation;
 
         color += texture(Texture, TexCoord) * vec4(finalObjectLight,  1.0f);
-    }
+
+        if (intensity > 0.95f)
+		    color = vec4(0.5f, 0.5f, 1.0f, 1.0f);
+	    else if (intensity > 0.5f)
+		    color = vec4(0.3f, 0.3f, 0.6f, 1.0f);
+	    else if (intensity > 0.25f)
+		    color = vec4(0.2f ,0.2f ,0.4f ,1.0f);
+	    else
+		    color = vec4(0.1f, 0.1f, 0.2f, 1.0f);
+
+//        if (intensity > 0.95f)
+//		   color *= vec4(1.0f, 1.0f, 1.0f, 1.0f);
+//	    else if (intensity > 0.5f)
+//		   color *= vec4(0.8f, 0.8f, 0.8f, 1.0f);
+//	    else if (intensity > 0.25f)
+//		   color *= vec4(0.4f, 0.4f, 0.4f, 1.0f);
+//	    else
+//		   color *= vec4(0.1f, 0.1f, 0.1f, 1.0f);
+
+
+
+
+
+
+//    }  // end for loop
 
  //   color = texture(Texture, TexCoord) * vec4(finalObjectLight,  1.0f);
 
