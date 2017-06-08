@@ -80,10 +80,12 @@ glm::vec3 Camera::GetCameraForward()
 }
 
 void Camera::SetSpeed(float _speed) {
+
 	this->speed = _speed;
 }
 
 void Camera::SetPosition(glm::vec3 newPosition) {
+
 	position = newPosition;
 }
 
@@ -110,23 +112,23 @@ void Camera::MoveLeft() {
 	
 	if (position.x > -252.0f)
 		//position -= glm::vec3(1.0f, 0.0f, 0.0f) * speed;
-		position += normalize(glm::vec3(forward.z, forward.y, -forward.x));
+		position += normalize(glm::vec3(forward.z, forward.y, -forward.x)) * speed;
 }
 
 void Camera::MoveRight() {
 	
 	if (position.x < 252.0f)
 		//position += glm::vec3(1.0f, 0.0f, 0.0f) * speed;
-		position -= normalize(glm::vec3(forward.z, forward.y, -forward.x));
+		position -= normalize(glm::vec3(forward.z, forward.y, -forward.x)) * speed;
 }
 
 void Camera::MoveUp() {
 	
-	position += glm::vec3(0.0f, 1.0f, 0.0f) * speed;
+	//position += glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
 void Camera::MoveDown() {
-	position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
+	//position -= glm::vec3(0.0f, 1.0f, 0.0f) * speed;
 }
 
 //void Camera::AdjustToTerrain(std::vector<VertexFormat> _terrainVertices)
@@ -192,7 +194,6 @@ void Camera::AdjustToTerrainSimple(std::vector<VertexFormat> _terrainVertices)
 		position.y = _terrainVertices.at(move).pos.y + 0.3f;
 	}
 }
-
 
 //void Camera::AddTerrainVertices(std::vector<VertexFormat> _terrainVertices)
 //{
