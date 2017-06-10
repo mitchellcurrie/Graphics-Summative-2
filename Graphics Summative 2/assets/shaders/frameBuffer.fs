@@ -7,8 +7,11 @@ uniform sampler2D texFramebuffer;
 uniform bool Greyscale;
 uniform bool Motionblur;
 
-const float blurSizeH = 1.0 / 300.0;
-const float blurSizeV = 1.0 / 200.0;
+//const float blurSizeH = 1.0 / 300.0;
+//const float blurSizeV = 1.0 / 200.0;
+
+const float blurSizeH = 1.0 / 540.0;
+const float blurSizeV = 1.0 / 360.0;
  
 void main()
 {
