@@ -4,6 +4,9 @@
 
 FrameBuffer::FrameBuffer(GLuint _program)
 {
+	m_Greyscale = false;
+	m_MotionBlur = false;
+
 	program = _program;
 
 	GLfloat vertices[] = {  
@@ -70,10 +73,30 @@ void FrameBuffer::Setup()
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glEnable(GL_DEPTH_TEST);
+
+	GLuint greyscaleLoc = glGetUniformLocation(program, "Greyscale");
+	glUniform1f(greyscaleLoc, m_Greyscale);
+
+	GLuint motionblurLoc = glGetUniformLocation(program, "Motionblur");
+	glUniform1f(motionblurLoc, m_MotionBlur);
 }
 
 void FrameBuffer::Draw()
 {
+	//-------------------------------------------------------//
+
+	/*GLuint greyscaleLoc = glGetUniformLocation(program, "Greyscale");
+	glUniform1f(greyscaleLoc, m_Greyscale);*/
+
+
+	//// true
+	//gl.uniform1i(gl.getUniformLocation("uDoCalculation"), 1);
+
+	//// false
+	//gl.uniform1i(gl.getUniformLocation("uDoCalculation"), 0);
+
+	//-------------------------------------------------------//
+
 	// Bind default framebuffer and draw contents of our framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindVertexArray(vao);
@@ -91,4 +114,26 @@ FrameBuffer::~FrameBuffer()
 {
 	glDeleteFramebuffers(1, &frameBuffer);
 }
+
+void FrameBuffer::SetGreyscale(bool _b)
+{
+	m_Greyscale = _b;
+}
+
+void FrameBuffer::SetMotionBlur(bool _b)
+{
+	m_MotionBlur = _b;
+}
+
+bool FrameBuffer::isGreyscale()
+{
+	return m_Greyscale;
+}
+
+bool FrameBuffer::isMotionBlur()
+{
+	return m_MotionBlur;
+}
+
+
 

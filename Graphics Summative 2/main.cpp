@@ -24,13 +24,14 @@
 #include "TessModel.h"
 #include "frameBuffer.h"
 #include <string>
+#include <ctime>
 
 // PCG
 #include <cmath>
 #include "RAW.h"
 #include "PerlinNoise.h"
 
-#define SEED 1
+// #define SEED 1
 
 const std::wstring FILENAME = L"assets/heightmap/PCG_MAP.raw";
 
@@ -80,15 +81,14 @@ GLfloat lastY = Utils::HEIGHT / 2.0;
 bool firstMouse = true;
 
 // Move everything
-float fMoveY = 37.9f;
-float iMoveY = static_cast<float>(fMoveY);
+float fMoveY = 47.0f;
+int iMoveY = static_cast<int>(fMoveY);
 
 float fMoveX = 13.0f;
-float iMoveX = static_cast<float>(fMoveX);
+int iMoveX = static_cast<int>(fMoveX);
 
 // Custom models
 Model *Castle, *Nanosuit;
-
 
 unsigned char KeyCode[255];
 bool WireDraw = false;
@@ -225,6 +225,7 @@ void Init()
 
 	// Terrain
 	string FILENAME_string = string(FILENAME.begin(), FILENAME.end());
+	srand((unsigned int)time(NULL));
 	GeneratePerlinNoiseMap(513, 513, FILENAME_string);
 
 	GLuint terrainProgram = shaderLoader.CreateProgram("assets/shaders/heightmap.vs", "assets/shaders/heightmap.fs");
@@ -266,13 +267,12 @@ void Init()
 	// Frame buffer
 	GLuint FBProgram = shaderLoader.CreateProgram("assets/shaders/frameBuffer.vs",
 		"assets/shaders/frameBuffer.fs");
-	frameBuffer = new FrameBuffer(FBProgram);
-
+	frameBuffer = new FrameBuffer(FBProgram);	
 }
 
 void Render() {
 
-	if (Greyscale) { frameBuffer->Setup(); }
+	frameBuffer->Setup(); 
 
 	glClearColor(0.529f, 0.8078f, 0.98f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -304,7 +304,7 @@ void Render() {
 			(*itr)->Render();
 	}
 
-	if (Greyscale) { frameBuffer->Draw(); }
+	frameBuffer->Draw(); 
 
 	glutSwapBuffers();
 
@@ -375,7 +375,7 @@ void Update() {
 
 	// Greyscale
 	if (KeyCode[(unsigned char)'g'] == KeyState::Pressed) {
-		Greyscale = true;
+		frameBuffer->SetGreyscale(true);
 	}
 	//if (KeyCode[(unsigned char)'g'] == KeyState::Released) {
 	//	Greyscale = false;
@@ -439,6 +439,9 @@ void Update() {
 	//camera->AdjustToTerrain(terrain->GetVertices());
 	camera->AdjustToTerrainSimple(terrain->GetVertices());
 	//std::cout << camera->GetPosition().x << "," << camera->GetPosition().y << "," << camera->GetPosition().z << endl;
+
+	frameBuffer->SetMotionBlur(false);
+//	std::cout << "Motion blur = " << frameBuffer->isMotionBlur() << endl;
 }
 
 void KeyDown(unsigned char key, int x, int y) {
@@ -473,6 +476,9 @@ void mouse(int button, int button_state, int x, int y) {
 }
 
 void mousePassiveMove(int x, int y) {
+	
+	frameBuffer->SetMotionBlur(true);
+
 	if (firstMouse) {
 		lastX = x;
 		lastY = y;
@@ -481,6 +487,7 @@ void mousePassiveMove(int x, int y) {
 
 	GLfloat xoffset = x - lastX;
 	GLfloat yoffset = lastY - y; // Reversed since y coords go from bottom to left
+		
 	lastX = x;
 	lastY = y;
 
@@ -510,7 +517,8 @@ void GeneratePerlinNoiseMap(unsigned int width, unsigned int height, string file
 	RAW image(width, height);
 
 	// Create a PerlinNoise object with the reference permutation vector
-	PerlinNoise pn(SEED);
+	int seed = (rand() % 100);
+	PerlinNoise pn(seed);
 
 	unsigned int iteration = 0;
 
