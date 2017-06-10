@@ -98,6 +98,7 @@ void main(){
 	
 		///////
 
+		// Fog
 		float d = distance(worldPos, cameraPos);
 		float lerp = (d - 100.0f) / 10.0f;
 		lerp = clamp(lerp, 0.0f, 1.0f);
@@ -109,7 +110,7 @@ void main(){
 		///////
 
 
-
+		// For fog
  		color = mix((vec4(totalColor, 1.0f) * vTexColor), vFogColor, lerp);    
 
 		// color = vec4(totalColor, 1.0f) * vTexColor;

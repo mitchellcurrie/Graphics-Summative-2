@@ -22,6 +22,7 @@
 #include "terrain.h"
 #include "GeometryModel.h"
 #include "TessModel.h"
+#include "frameBuffer.h"
 #include <string>
 
 // PCG
@@ -59,6 +60,7 @@ GameModel* LightSphere;
 Terrain* terrain;
 GeometryModel* geomModel;
 TessModel* tessModel;
+FrameBuffer* frameBuffer;
 
 // Bullets
 GameModel* bullet;
@@ -78,7 +80,7 @@ GLfloat lastY = Utils::HEIGHT / 2.0;
 bool firstMouse = true;
 
 // Move everything
-float fMoveY = 87.9f;
+float fMoveY = 37.9f;
 float iMoveY = static_cast<float>(fMoveY);
 
 float fMoveX = 13.0f;
@@ -92,7 +94,9 @@ unsigned char KeyCode[255];
 bool WireDraw = false;
 bool Culling = true;
 bool AntiA = true;
+bool Greyscale = false;
 
+void Init();
 void Render();
 void Update();
 void KeyDown(unsigned char key, int x, int y);
@@ -123,12 +127,28 @@ int main(int argc, char **argv) {
 	glShadeModel(GL_SMOOTH);                            // Enable smooth shading
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 
-
 	// To test whether backface culling is working, wire draw mode
 	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	glewInit();
+	Init();
 
+	glutDisplayFunc(Render);
+	glutKeyboardFunc(KeyDown);
+	glutKeyboardUpFunc(KeyUp);
+	glutIdleFunc(Update);
+
+	glutMouseFunc(mouse);
+	glutPassiveMotionFunc(mousePassiveMove);
+
+	glutMainLoop();
+
+	return (EXIT_SUCCESS);
+
+}
+
+void Init()
+{
 	// -- Object creation
 	camera = new Camera(vec3(0 + iMoveX, 4 + iMoveY, 8), ut->WIDTH, ut->HEIGHT);
 	camera->SetSpeed(0.5f);  // was 0.03
@@ -229,7 +249,6 @@ int main(int argc, char **argv) {
 	tessModel->SetPosition(glm::vec3(0.0f + fMoveX, 3.0f + fMoveY, 0.0f));
 
 	// Bullets
-
 	GLuint bulletProgram = shaderLoader.CreateProgram("assets/shaders/specular.vs", "assets/shaders/specular.fs");
 
 	for (size_t x = 0; x < 20; x++)
@@ -244,50 +263,39 @@ int main(int argc, char **argv) {
 
 	TimeOld = static_cast<float>((GLfloat)glutGet(GLUT_ELAPSED_TIME));
 
-	// -- Object creation
-	glutDisplayFunc(Render);
-	glutKeyboardFunc(KeyDown);
-	glutKeyboardUpFunc(KeyUp);
-	glutIdleFunc(Update);
-
-	glutMouseFunc(mouse);
-	glutPassiveMotionFunc(mousePassiveMove);
-
-	glutMainLoop();
-
-	return (EXIT_SUCCESS);
+	// Frame buffer
+	GLuint FBProgram = shaderLoader.CreateProgram("assets/shaders/frameBuffer.vs",
+		"assets/shaders/frameBuffer.fs");
+	frameBuffer = new FrameBuffer(FBProgram);
 
 }
 
 void Render() {
 
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	if (Greyscale) { frameBuffer->Setup(); }
 
-	skybox->Render();
+	glClearColor(0.529f, 0.8078f, 0.98f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	//skybox->Render();
 
 	// Backface culling for sphere
-	if (Culling)
-		glEnable(GL_CULL_FACE);
+	//if (Culling)
+	//	glEnable(GL_CULL_FACE);
 
-	glFrontFace(GL_CCW);
-	glCullFace(GL_FRONT);
-	Sphere->Render();
-	glDisable(GL_CULL_FACE);
+	//glFrontFace(GL_CCW);
+	//glCullFace(GL_FRONT);
+	//Sphere->Render();
+	//glDisable(GL_CULL_FACE);
 
 //	Castle->Draw();
 //	Nanosuit->Draw();
 	//Cube->RenderStencil(Cube, Mirror, ReflectedCube);
-
 	LightSphere->Render();
-
+	Sphere->Render();
 	Sphere2->Render();
 	Sphere3->Render();
-
 	terrain->draw();
-
 	geomModel->Render();
-
 	tessModel->render();
 
 	for (auto itr = bulletVector.begin(); itr != bulletVector.end(); itr++)
@@ -295,6 +303,8 @@ void Render() {
 		if ((*itr)->isBulletActive())
 			(*itr)->Render();
 	}
+
+	if (Greyscale) { frameBuffer->Draw(); }
 
 	glutSwapBuffers();
 
@@ -359,10 +369,17 @@ void Update() {
 	if (KeyCode[(unsigned char)'v'] == KeyState::Pressed) {
 		WireDraw = true;
 	}
-
 	if (KeyCode[(unsigned char)'v'] == KeyState::Released) {
 		WireDraw = false;
 	}
+
+	// Greyscale
+	if (KeyCode[(unsigned char)'g'] == KeyState::Pressed) {
+		Greyscale = true;
+	}
+	//if (KeyCode[(unsigned char)'g'] == KeyState::Released) {
+	//	Greyscale = false;
+	//}
 
 	// Culling
 	if (KeyCode[(unsigned char)'c'] == KeyState::Pressed) {

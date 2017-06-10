@@ -131,6 +131,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Cubemap.cpp" />
+    <ClCompile Include="frameBuffer.cpp" />
     <ClCompile Include="GameModel.cpp" />
     <ClCompile Include="GeometryModel.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -146,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Cubemap.h" />
+    <ClInclude Include="frameBuffer.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="GeometryModel.h" />
     <ClInclude Include="Light.h" />
@@ -160,6 +162,8 @@
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\frameBuffer.fs" />
+    <None Include="assets\shaders\frameBuffer.vs" />
     <None Include="assets\shaders\geometry.fs" />
     <None Include="assets\shaders\geometry.gs" />
     <None Include="assets\shaders\geometry.vs" />

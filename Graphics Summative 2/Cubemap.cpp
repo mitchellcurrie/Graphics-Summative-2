@@ -123,10 +123,9 @@ GLuint Cubemap::loadCubemap(std::vector<const GLchar*> faces)
 
 void Cubemap::Render()
 {
-	// glDepthMask(GL_FALSE);
+	// glDepthMask(GL_FALSE)
 
-	glUseProgram(program);
-	
+	glUseProgram(program);	
 	glBindVertexArray(vao);
 
 	glActiveTexture(GL_TEXTURE0);

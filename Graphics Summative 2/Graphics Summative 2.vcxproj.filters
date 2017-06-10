@@ -40,6 +40,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source files</Filter>
     </ClCompile>
+    <ClCompile Include="frameBuffer.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RAW.h">
@@ -82,6 +85,9 @@
       <Filter>Header files</Filter>
     </ClInclude>
     <ClInclude Include="GeometryModel.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="frameBuffer.h">
       <Filter>Header files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -129,6 +135,12 @@
       <Filter>Resources</Filter>
     </None>
     <None Include="assets\shaders\TessModel.tes">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\frameBuffer.fs">
+      <Filter>Resources</Filter>
+    </None>
+    <None Include="assets\shaders\frameBuffer.vs">
       <Filter>Resources</Filter>
     </None>
   </ItemGroup>
