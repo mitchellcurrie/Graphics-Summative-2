@@ -272,7 +272,7 @@ void Init()
 
 void Render() {
 
-	frameBuffer->Setup(); 
+	if (!WireDraw) { frameBuffer->Setup(); }
 
 	glClearColor(0.529f, 0.8078f, 0.98f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -304,7 +304,7 @@ void Render() {
 			(*itr)->Render();
 	}
 
-	frameBuffer->Draw(); 
+	if (!WireDraw) { frameBuffer->Draw(); }
 
 	glutSwapBuffers();
 
