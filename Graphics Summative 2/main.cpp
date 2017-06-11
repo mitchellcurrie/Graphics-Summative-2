@@ -81,7 +81,7 @@ GLfloat lastY = Utils::HEIGHT / 2.0;
 bool firstMouse = true;
 
 // Move everything
-float fMoveY = 47.0f;
+float fMoveY = 87.0f;
 int iMoveY = static_cast<int>(fMoveY);
 
 float fMoveX = 13.0f;
@@ -268,6 +268,15 @@ void Init()
 	GLuint FBProgram = shaderLoader.CreateProgram("assets/shaders/frameBuffer.vs",
 		"assets/shaders/frameBuffer.fs");
 	frameBuffer = new FrameBuffer(FBProgram);	
+
+	camera->AdjustToTerrainSimple(terrain->GetVertices());
+
+	Sphere->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -8.0f));
+	Sphere2->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -11.0f));
+	Sphere3->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -14.0f));
+	light->SetPosition(camera->GetPosition() + vec3(5.0f, 4.0f, -5.0f));
+	geomModel->SetPosition(camera->GetPosition() + vec3(-10.0f, 25.0f, -5.0f));
+	tessModel->SetPosition(camera->GetPosition() + vec3(0.0f, 6.0f, -5.0f));
 }
 
 void Render() {
@@ -377,9 +386,9 @@ void Update() {
 	if (KeyCode[(unsigned char)'g'] == KeyState::Pressed) {
 		frameBuffer->SetGreyscale(true);
 	}
-	//if (KeyCode[(unsigned char)'g'] == KeyState::Released) {
-	//	Greyscale = false;
-	//}
+	if (KeyCode[(unsigned char)'g'] == KeyState::Released) {
+		frameBuffer->SetGreyscale(false);
+	}
 
 	// Culling
 	if (KeyCode[(unsigned char)'c'] == KeyState::Pressed) {
@@ -392,7 +401,9 @@ void Update() {
 	// Reset
 	if ((KeyCode[(unsigned char)'r'] == KeyState::Pressed) || (KeyCode[(unsigned char)'R'] == KeyState::Pressed)) {
 		camera->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 8));
-		light->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 0));
+		camera->AdjustToTerrainSimple(terrain->GetVertices());
+		light->SetPosition(camera->GetPosition() + vec3(0.0f, 4.0f, -5.0f));
+		// light->SetPosition(vec3(0 + iMoveX, 4 + iMoveY, 0));
 	}
 
 	TimeNew = static_cast<float>((GLfloat)glutGet(GLUT_ELAPSED_TIME));
