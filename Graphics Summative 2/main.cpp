@@ -274,7 +274,7 @@ void Init()
 	Sphere->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -8.0f));
 	Sphere2->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -11.0f));
 	Sphere3->SetPosition(camera->GetPosition() + vec3(4.0f, 5.0f, -14.0f));
-	light->SetPosition(camera->GetPosition() + vec3(5.0f, 4.0f, -5.0f));
+	light->SetPosition(camera->GetPosition() + vec3(7.0f, 4.0f, -5.0f));
 	geomModel->SetPosition(camera->GetPosition() + vec3(-10.0f, 25.0f, -5.0f));
 	tessModel->SetPosition(camera->GetPosition() + vec3(0.0f, 6.0f, -5.0f));
 }
