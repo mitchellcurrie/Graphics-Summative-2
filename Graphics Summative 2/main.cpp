@@ -335,42 +335,42 @@ void Update() {
 
 
 	// Light controls
-	if ((KeyCode[(unsigned char)'q'] == KeyState::Pressed) || (KeyCode[(unsigned char)'Q'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'u'] == KeyState::Pressed) || (KeyCode[(unsigned char)'U'] == KeyState::Pressed)) {
 		light->MoveUp();
 	}
-	if ((KeyCode[(unsigned char)'e'] == KeyState::Pressed) || (KeyCode[(unsigned char)'E'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'o'] == KeyState::Pressed) || (KeyCode[(unsigned char)'O'] == KeyState::Pressed)) {
 		light->MoveDown();
 	}
-	if ((KeyCode[(unsigned char)'a'] == KeyState::Pressed) || (KeyCode[(unsigned char)'A'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'j'] == KeyState::Pressed) || (KeyCode[(unsigned char)'J'] == KeyState::Pressed)) {
 		light->MoveLeft();
 	}
-	if ((KeyCode[(unsigned char)'d'] == KeyState::Pressed) || (KeyCode[(unsigned char)'D'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'l'] == KeyState::Pressed) || (KeyCode[(unsigned char)'L'] == KeyState::Pressed)) {
 		light->MoveRight();
 	}
-	if ((KeyCode[(unsigned char)'w'] == KeyState::Pressed) || (KeyCode[(unsigned char)'W'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'i'] == KeyState::Pressed) || (KeyCode[(unsigned char)'I'] == KeyState::Pressed)) {
 		light->MoveForward();
 	}
-	if ((KeyCode[(unsigned char)'s'] == KeyState::Pressed) || (KeyCode[(unsigned char)'S'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'k'] == KeyState::Pressed) || (KeyCode[(unsigned char)'K'] == KeyState::Pressed)) {
 		light->MoveBackward();
 	}
 
 	// Camera controls
-	if ((KeyCode[(unsigned char)'u'] == KeyState::Pressed) || (KeyCode[(unsigned char)'U'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'q'] == KeyState::Pressed) || (KeyCode[(unsigned char)'Q'] == KeyState::Pressed)) {
 		camera->MoveUp();
 	}
-	if ((KeyCode[(unsigned char)'o'] == KeyState::Pressed) || (KeyCode[(unsigned char)'O'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'e'] == KeyState::Pressed) || (KeyCode[(unsigned char)'E'] == KeyState::Pressed)) {
 		camera->MoveDown();
 	}
-	if ((KeyCode[(unsigned char)'j'] == KeyState::Pressed) || (KeyCode[(unsigned char)'J'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'a'] == KeyState::Pressed) || (KeyCode[(unsigned char)'A'] == KeyState::Pressed)) {
 		camera->MoveLeft();
 	}
-	if ((KeyCode[(unsigned char)'l'] == KeyState::Pressed) || (KeyCode[(unsigned char)'L'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'d'] == KeyState::Pressed) || (KeyCode[(unsigned char)'D'] == KeyState::Pressed)) {
 		camera->MoveRight();
 	}
-	if ((KeyCode[(unsigned char)'i'] == KeyState::Pressed) || (KeyCode[(unsigned char)'I'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'w'] == KeyState::Pressed) || (KeyCode[(unsigned char)'W'] == KeyState::Pressed)) {
 		camera->MoveForward();
 	}
-	if ((KeyCode[(unsigned char)'k'] == KeyState::Pressed) || (KeyCode[(unsigned char)'K'] == KeyState::Pressed)) {
+	if ((KeyCode[(unsigned char)'s'] == KeyState::Pressed) || (KeyCode[(unsigned char)'S'] == KeyState::Pressed)) {
 		camera->MoveBackward();
 	}
 
